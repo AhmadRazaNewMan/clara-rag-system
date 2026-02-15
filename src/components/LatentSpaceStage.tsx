@@ -11,6 +11,7 @@ interface LatentSpaceStageProps {
   topK: number
   onTopKChange: (n: number) => void
   onQuery: () => void
+  onSeeFullFlow?: () => void
 }
 
 function placeOrbs(count: number): { x: number; y: number; z: number }[] {
@@ -33,6 +34,7 @@ export function LatentSpaceStage({
   topK,
   onTopKChange,
   onQuery,
+  onSeeFullFlow,
 }: LatentSpaceStageProps) {
   const [showCode, setShowCode] = useState(false)
   const orbCount = Math.max(
@@ -101,18 +103,25 @@ export function LatentSpaceStage({
           <p className="control-hint">
             Number of memory tokens sent to the generator. Differentiable top-k in CLaRa lets the generator teach the retriever.
           </p>
-          <motion.button
-            type="button"
-            className="stage-cta"
-            onClick={() => {
-              playStep()
-              onQuery()
-            }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Run a query
-          </motion.button>
+          <div className="latent-actions">
+            <motion.button
+              type="button"
+              className="stage-cta"
+              onClick={() => {
+                playStep()
+                onQuery()
+              }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Run a query
+            </motion.button>
+            {onSeeFullFlow && (
+              <button type="button" className="stage-cta stage-cta-secondary" onClick={onSeeFullFlow}>
+                See full flow (2D + animation)
+              </button>
+            )}
+          </div>
 
           <button
             type="button"

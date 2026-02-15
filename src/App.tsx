@@ -6,6 +6,7 @@ import { DocumentStage } from './components/DocumentStage'
 import { CompressionStage } from './components/CompressionStage'
 import { LatentSpaceStage } from './components/LatentSpaceStage'
 import { QueryStage } from './components/QueryStage'
+import { FlowStage } from './components/FlowStage'
 import { GenerationStage } from './components/GenerationStage'
 import { Nav } from './components/Nav'
 import type { StageId } from './types'
@@ -17,6 +18,7 @@ const STAGES: { id: StageId; label: string }[] = [
   { id: 'compression', label: 'Compression' },
   { id: 'latent', label: 'Latent Space' },
   { id: 'query', label: 'Query' },
+  { id: 'flow', label: 'Flow' },
   { id: 'generation', label: 'Generation' },
 ]
 
@@ -103,6 +105,7 @@ export default function App() {
                 topK={topK}
                 onTopKChange={setTopK}
                 onQuery={() => goTo('query')}
+                onSeeFullFlow={() => goTo('flow')}
               />
             </motion.div>
           )}
@@ -118,6 +121,23 @@ export default function App() {
                 query={query}
                 onQueryChange={setQuery}
                 onGenerate={() => goTo('generation')}
+                onSeeFullFlow={() => goTo('flow')}
+              />
+            </motion.div>
+          )}
+          {stage === 'flow' && (
+            <motion.div
+              key="flow"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <FlowStage
+                query={query}
+                documentText={documentText}
+                topK={topK}
+                onContinueToGeneration={() => goTo('generation')}
               />
             </motion.div>
           )}

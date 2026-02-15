@@ -5,6 +5,7 @@ export type StageId =
   | 'compression'
   | 'latent'
   | 'query'
+  | 'flow'
   | 'generation'
 
 export interface MemoryToken {

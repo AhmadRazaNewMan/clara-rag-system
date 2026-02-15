@@ -6,6 +6,7 @@ interface QueryStageProps {
   query: string
   onQueryChange: (q: string) => void
   onGenerate: () => void
+  onSeeFullFlow: () => void
 }
 
 const SUGGESTIONS = [
@@ -20,7 +21,7 @@ const QUERY_THINKING = [
   'Selecting top-K…',
 ]
 
-export function QueryStage({ query, onQueryChange, onGenerate }: QueryStageProps) {
+export function QueryStage({ query, onQueryChange, onGenerate, onSeeFullFlow }: QueryStageProps) {
   const [thinking, setThinking] = useState(false)
   const [thinkingStep, setThinkingStep] = useState(0)
 
@@ -122,19 +123,31 @@ export function QueryStage({ query, onQueryChange, onGenerate }: QueryStageProps
       </AnimatePresence>
 
       {!thinking && (
-        <motion.button
-          type="button"
-          className="stage-cta"
-          onClick={handleGenerate}
-          disabled={!query.trim()}
-          whileHover={{ scale: query.trim() ? 1.02 : 1 }}
-          whileTap={{ scale: query.trim() ? 0.98 : 1 }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          Generate answer
-        </motion.button>
+        <div className="query-actions">
+          <motion.button
+            type="button"
+            className="stage-cta"
+            onClick={handleGenerate}
+            disabled={!query.trim()}
+            whileHover={{ scale: query.trim() ? 1.02 : 1 }}
+            whileTap={{ scale: query.trim() ? 0.98 : 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Generate answer
+          </motion.button>
+          <motion.button
+            type="button"
+            className="stage-cta stage-cta-secondary"
+            onClick={onSeeFullFlow}
+            disabled={!query.trim()}
+            whileHover={{ scale: query.trim() ? 1.02 : 1 }}
+            whileTap={{ scale: query.trim() ? 0.98 : 1 }}
+          >
+            See full flow (animation)
+          </motion.button>
+        </div>
       )}
     </section>
   )
