@@ -5,6 +5,7 @@ interface HeroProps {
   onSystemView: () => void
 }
 
+
 export function Hero({ onEnter, onSystemView }: HeroProps) {
   return (
     <section className="hero">
